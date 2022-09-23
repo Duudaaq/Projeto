@@ -13,7 +13,12 @@ class Pessoa:
 class Cliente (Pessoa):
     def __init__ (self, nome, dataAniversario) -> None:
         super().__init__ (nome, dataAniversario)
-    
+
+class Livro:
+    def __init__(self, nome, autor, dataPublicar) -> None:
+        self.nome = nome
+        self.autor = autor
+        self.dataPublicar = dataPublicar
 
 class Biblioteca:
     def __init__(self) -> None:

@@ -1,3 +1,5 @@
+from ProjetoClass import *
+
 # from abc import ABC, abstractmethod 
 from datetime import date
 import time

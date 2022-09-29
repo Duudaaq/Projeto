@@ -74,19 +74,40 @@ while True:
         livroOption = input (">> ")
 
         if livroOption == "1":
-            
+            bio = Biblioteca()
+            bio.printarLivros()
             break
+
         elif livroOption == "2":
+            print ()
+            nomeLivro = input ("Digite o título do livro: \n")
+            autor = input ("Digite o nome do autor nascimento: \n")
+            quantidade_disponivel = int (input ("Quantidade de exemplares disponíveis: \n"))
+            genero = input ("Á que gênero pertecence o seu livro: \n")
+            faixaEt = input ("Faixa etária do livro: \n")
+            Npaginas = int (input ("Número de páginas: \n"))
+            data_de_edicao = input ("Data de publicação dessa edição: \n")
+            print ()
+            print ("Sua senha deve ter ao menos 8 dígitos, pelo menos 1 letra maiúscula e 1 caracter especial!")
+            print ("Digite uma senha válida:")
+            senha = input (">> ")
+            print ()
+
+            bio = Biblioteca ()
+            bio.inserirLivros (nomeLivro.title(), autor, genero, faixaEt, Npaginas, data_de_edicao)
             
+            sleep (2)
+            print ()
+            print ("Cadastro realizado com sucesso!")
+            print ()
+
             break
+
         elif livroOption == "3":
             continue
         else:
             print ("Opção incorreta!")
             continue
-
-        bio = Biblioteca()
-        bio.printarLivros()
 
     else:
         print ("Opçao incorreta!")

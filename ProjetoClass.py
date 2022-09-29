@@ -96,9 +96,9 @@ class Biblioteca:
         conexao.commit ()
         print(f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
-    def inserirLivros (self, titulo, autor, quantidade, genero, faixa_etaria, npaginas, data_de_edicao):
-        self.livros.append (Livro (titulo, autor, quantidade, genero, faixa_etaria, npaginas, data_de_edicao))
-        cursor.execute (f"INSERT INTO livros_na_estante (titulo, autor, quantidade, genero, faixa_etaria, npaginas, data_de_edicao) VALUES (?, ?, ?, ?, ?, ?, ?)", (titulo, autor, quantidade, genero, faixa_etaria, npaginas, data_de_edicao))
+    def inserirLivros (self, titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao):
+        self.livros.append (Livro (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))
+        cursor.execute (f"INSERT INTO livros_na_estante (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao) VALUES (?, ?, ?, ?, ?, ?, ?)", (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))
         conexao.commit ()
     def printarLivros (self):
         for i in self.livros:

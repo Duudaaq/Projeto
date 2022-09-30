@@ -17,7 +17,7 @@ for linha in cursor.fetchall ():
 
 # cursor.execute ("DELETE FROM cadastro")
 # conexao.commit ()
-# cursor.execute ("DELETE FROM conta")
+# cursor.execute ("DELETE FROM livros_na_estante")
 # conexao.commit ()
 
 def escrever (texto):
@@ -91,27 +91,28 @@ class Biblioteca:
         self.membro = ''
         self.livros = []
 
-    def inserirCliente (self, nome, dataCompleta, email, senha, palavra_chave):
-        self.membro = (Cliente (nome, dataCompleta, email, senha, palavra_chave))
-        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha, palavra_chave) VALUES (?, ?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha, palavra_chave))
+    def inserirCliente (self, nome, dataCompleta, email, senha):
+        self.membro = (Cliente (nome, dataCompleta, email, senha))
+        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha))
         conexao.commit ()
-        print(f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
+        print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
-    def recuperarSenha (self, email, senha):
-        cursor.execute (f"SELECT email FROM cadastro WHERE email = '{email}'") # Validar email
+    def recuperarSenha (self):
+        matricula_esqueceu = input ("Digite sua matrícula: \n")
+        email_esqueceu = input ("Digite seu e-mail: \n")
+
+        cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_esqueceu}'")
+        for matricula_for in cursor.fetchall():
+            pass
+
+        cursor.execute (f"SELECT email FROM cadastro WHERE email = '{email_esqueceu}'")
         for email_for in cursor.fetchall():
-            if email in email_for:
-                print ("Deu bom")
-            else:
-                print ("Não deu bom")
-
-        cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha}'")
-        for senha_for in cursor.fetchall():
-            if senha in senha_for:
-                print ("Deu bom")
-            else:
-                print ("Não deu bom")
-                
+            pass
+                                    
+        if matricula_esqueceu in matricula_for and email_esqueceu in email_for:
+            print ("Deu bom")
+        else:
+            print ("Não deu bom")
 
     def inserirLivros (self, titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao):
         self.livros.append (Livro (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))

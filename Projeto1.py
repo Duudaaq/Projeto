@@ -43,7 +43,6 @@ while True:
                 print ("Sua senha deve ter ao menos 8 dígitos, pelo menos 1 letra maiúscula e 1 caracter especial!")
                 print ("Digite uma senha válida:")
                 senha = input (">> ")
-                palavra_chave=input("escreva uma palavra chave para que possamos usar pra lhe ajudar mais tarde\n")
                 print ()
 
                 bio = Biblioteca ()
@@ -58,12 +57,10 @@ while True:
             break
 
         elif loginOption == "3":
-            email_esqueceu = input (">> ")
-            senha_esqueceu = input (">> ")
-            
             recuperar = Biblioteca ()
-            recuperar.recuperarSenha (email_esqueceu, senha_esqueceu)
-        
+            recuperar.recuperarSenha ()
+            break
+
         elif loginOption == "4":
             continue
 
@@ -118,19 +115,3 @@ while True:
     
 cursor.close()
 conexao.close ()
-
-# bio = Biblioteca ()
-
-# bio.inserirCliente (nome.title(), idade)
-
-# livro = input ("Nome do livro: \n")
-# autor = input ("Autor: \n")
-# data = int (input ("Data de publicação: \n"))
-# faixa = int (input ("Classificação etária: \n"))
-
-# bio.inserirLivros (livro.title(), autor.title(), data, faixa)
-
-# print()
-# bio.printarClientes()
-# print()
-# bio.printarLivros()

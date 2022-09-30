@@ -27,8 +27,8 @@ while True:
         loginOption = input (">> ")
 
         if loginOption == "1":
-            email = input ("Digite seu e-mail:")
-            senha = input ("Digite sua senha:")
+            matricula = int (input ("Digite seu e-mail: \n"))
+            senha = input ("Digite sua senha: \n")
 
         elif loginOption == "2":
             print ()
@@ -58,7 +58,11 @@ while True:
             break
 
         elif loginOption == "3":
-            pass
+            email_esqueceu = input (">> ")
+            senha_esqueceu = input (">> ")
+            
+            recuperar = Biblioteca ()
+            recuperar.recuperarSenha (email_esqueceu, senha_esqueceu)
         
         elif loginOption == "4":
             continue
@@ -109,7 +113,7 @@ while True:
             continue
 
     else:
-        print ("Opçao incorreta!")
+        print ("Opção incorreta!")
         continue
     
 cursor.close()

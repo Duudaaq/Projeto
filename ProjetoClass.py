@@ -97,6 +97,22 @@ class Biblioteca:
         conexao.commit ()
         print(f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
+    def recuperarSenha (self, email, senha):
+        cursor.execute (f"SELECT email FROM cadastro WHERE email = '{email}'") # Validar email
+        for email_for in cursor.fetchall():
+            if email in email_for:
+                print ("Deu bom")
+            else:
+                print ("Não deu bom")
+
+        cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha}'")
+        for senha_for in cursor.fetchall():
+            if senha in senha_for:
+                print ("Deu bom")
+            else:
+                print ("Não deu bom")
+                
+
     def inserirLivros (self, titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao):
         self.livros.append (Livro (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))
         cursor.execute (f"INSERT INTO livros_na_estante (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao) VALUES (?, ?, ?, ?, ?, ?, ?)", (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))
@@ -106,13 +122,14 @@ class Biblioteca:
             print (f"Livro: {i.titulo} \nAutor: {i.autor} \nQuantidade disponível: {i.quantidade_disponivel} \nGênero: {i.genero} \nFaixa Etária: {i.faixa_etaria} \nNúmero de páginas: {i.npaginas} \nData de publicação da edição: {i.data_de_edicao}")
 
     def emprestarLivro (self):
+        pass
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel
         se nao: não é possivel emprestar'''
 
-        '''Inserir na tabela de livros emprestados o clienmte que pegou e o titulo do livro
+        '''Inserir na tabela de livros emprestados o cliente que pegou e o titulo do livro
         
-        Deposi fazer uma função para devolver o livro:
+        Depois fazer uma função para devolver o livro:
         deletando o livro da tabela livros emprestados com select e where matricula
         '''

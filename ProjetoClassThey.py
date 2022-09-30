@@ -97,6 +97,21 @@ class Biblioteca:
         conexao.commit ()
         print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
+    def loginCliente (self):
+        matricula_login = input ("Matrícula: \n")
+        senha_login = input ("Senha: \n")
+        cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_login}'")
+        for matricula_for in cursor.fetchall():
+            pass
+        cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha_login}'")
+        for senha_for in cursor.fetchall():
+            pass
+        
+        if matricula_login in matricula_for and senha_login in senha_for:
+            print ("Deu bom")
+        else:
+            print ("Não deu bom")
+
     def recuperarSenha (self):
         matricula_esqueceu = input ("Digite sua matrícula: \n")
         email_esqueceu = input ("Digite seu e-mail: \n")

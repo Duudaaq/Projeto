@@ -63,7 +63,6 @@ class Cliente (Pessoa):
         super().__init__ (nome)
         self.dataCompleta = dataCompleta
         self.idade = self.calculadora (self.dataCompleta)
-        # self.data = data
         self.data = self.data_Completa (dataCompleta)
         self.matricula = self.matriculaFunc ()
         self.email = email
@@ -125,7 +124,10 @@ class Biblioteca:
             pass
                                     
         if matricula_esqueceu in matricula_for and email_esqueceu in email_for:
-            print ("Deu bom")
+            cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{matricula_esqueceu}'")
+            for matricula_for in cursor.fetchall():
+                pass
+
         else:
             print ("Não deu bom")
 

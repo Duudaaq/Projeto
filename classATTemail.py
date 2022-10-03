@@ -59,7 +59,7 @@ class Pessoa:
         return data
 
 class Cliente (Pessoa):
-    def __init__ (self, nome, dataCompleta, email, senha) -> None:
+    def __init__ (self, nome, dataCompleta, email, senha, palavra_chave) -> None:
         super().__init__ (nome)
         self.dataCompleta = dataCompleta
         self.idade = self.calculadora (self.dataCompleta)
@@ -68,6 +68,7 @@ class Cliente (Pessoa):
         self.matricula = self.matriculaFunc ()
         self.email = email
         self.senha = senha
+        self.palavra_chave = palavra_chave
 
     def matriculaFunc (self):
         ano = datetime.date.today().strftime('%Y')
@@ -90,9 +91,9 @@ class Biblioteca:
         self.membro = ''
         self.livros = []
 
-    def inserirCliente (self, nome, dataCompleta, email, senha):
-        self.membro = (Cliente (nome, dataCompleta, email, senha))
-        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha))
+    def inserirCliente (self, nome, dataCompleta, email, senha, palavra_chave):
+        self.membro = (Cliente (nome, dataCompleta, email, senha, palavra_chave))
+        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha, palavra_chave) VALUES (?, ?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha, palavra_chave))
         conexao.commit ()
         print(f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
@@ -102,7 +103,16 @@ class Biblioteca:
         conexao.commit ()
     def printarLivros (self):
         for i in self.livros:
-            print (f"Livro: {i.titulo} \nAutor: {i.autor} \nAno de publicação: {i.dataPublicar} \nClassificação etária: {i.faixaEt}")
+            print (f"Livro: {i.titulo} \nAutor: {i.autor} \nQuantidade disponível: {i.quantidade_disponivel} \nGênero: {i.genero} \nFaixa Etária: {i.faixa_etaria} \nNúmero de páginas: {i.npaginas} \nData de publicação da edição: {i.data_de_edicao}")
 
     def emprestarLivro (self):
-        pass
+
+        '''Verificação se tem livros para emrestar
+        Se tiver: diminuir 1 de livro disponivel
+        se nao: não é possivel emprestar'''
+
+        '''Inserir na tabela de livros emprestados o clienmte que pegou e o titulo do livro
+        
+        Deposi fazer uma função para devolver o livro:
+        deletando o livro da tabela livros emprestados com select e where matricula
+        '''

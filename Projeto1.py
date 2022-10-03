@@ -28,7 +28,10 @@ while True:
         if loginOption == "1":
             bio = Biblioteca ()
             bio.loginCliente ()
+            print ()
+            sleep (2)
             bio.printarLivros ()
+            bio.emprestarLivro ()
             break
 
         elif loginOption == "2":
@@ -79,8 +82,8 @@ while True:
         livroOption = input (">> ")
 
         if livroOption == "1":
-            bio = Biblioteca()
-            bio.printarLivros()
+            bio = Biblioteca ()
+            bio.printarLivros ()
             break
 
         elif livroOption == "2":
@@ -102,8 +105,7 @@ while True:
             print ("Cadastro realizado com sucesso!")
             print ()
 
-            bio.printarLivros()
-
+            bio.printarLivros ()
             break
 
         elif livroOption == "3":

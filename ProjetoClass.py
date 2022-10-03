@@ -8,7 +8,7 @@ import sys
 import datetime
 import random
 
-conexao = sqlite3.connect ("biblioteca.db")
+conexao = sqlite3.connect ("biblioteca.maria.db")
 cursor = conexao.cursor ()
 
 cursor.execute ("SELECT * FROM cadastro")
@@ -136,11 +136,27 @@ class Biblioteca:
         cursor.execute (f"INSERT INTO livros_na_estante (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao) VALUES (?, ?, ?, ?, ?, ?, ?)", (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))
         conexao.commit ()
     def printarLivros (self):
-        for i in self.livros:
-            print (f"Livro: {i.titulo} \nAutor: {i.autor} \nQuantidade disponível: {i.quantidade_disponivel} \nGênero: {i.genero} \nFaixa Etária: {i.faixa_etaria} \nNúmero de páginas: {i.npaginas} \nData de publicação da edição: {i.data_de_edicao}")
+        cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0")
+        print ("Livros disponíveis:")
+        print()
+        for i in cursor.fetchall():
+            print (f"Livro: {i [1]}")
+            print (f"Quantidade disponível: {i [3]}")
+            print ()
 
     def emprestarLivro (self):
-        pass
+
+        livro_emprestado = input ("Qual livro deseja que seja emprestado? \n")
+        cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        quantidadeLivro = int
+        cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel -= 1 WHERE {livro_emprestado}")
+        conexao.commit()
+        cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo [1]))
+        conexao.commit()
+
+        cursor.execute (f"SELECT * FROM livros_na_estante")
+        for i in cursor.fetchall():
+            print (i)
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel

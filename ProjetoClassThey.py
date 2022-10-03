@@ -17,7 +17,7 @@ for linha in cursor.fetchall ():
 
 # cursor.execute ("DELETE FROM cadastro")
 # conexao.commit ()
-# cursor.execute ("DELETE FROM conta")
+# cursor.execute ("DELETE FROM livros_na_estante")
 # conexao.commit ()
 
 def escrever (texto):
@@ -91,11 +91,43 @@ class Biblioteca:
         self.membro = ''
         self.livros = []
 
-    def inserirCliente (self, nome, dataCompleta, email, senha, palavra_chave):
-        self.membro = (Cliente (nome, dataCompleta, email, senha, palavra_chave))
-        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha, palavra_chave) VALUES (?, ?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha, palavra_chave))
+    def inserirCliente (self, nome, dataCompleta, email, senha):
+        self.membro = (Cliente (nome, dataCompleta, email, senha))
+        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha))
         conexao.commit ()
-        print(f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
+        print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
+
+    def loginCliente (self):
+        matricula_login = input ("Matrícula: \n")
+        senha_login = input ("Senha: \n")
+        cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_login}'")
+        for matricula_for in cursor.fetchall():
+            pass
+        cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha_login}'")
+        for senha_for in cursor.fetchall():
+            pass
+        
+        if matricula_login in matricula_for and senha_login in senha_for:
+            print ("Deu bom")
+        else:
+            print ("Não deu bom")
+
+    def recuperarSenha (self):
+        matricula_esqueceu = input ("Digite sua matrícula: \n")
+        email_esqueceu = input ("Digite seu e-mail: \n")
+
+        cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_esqueceu}'")
+        for matricula_for in cursor.fetchall():
+            pass
+
+        cursor.execute (f"SELECT email FROM cadastro WHERE email = '{email_esqueceu}'")
+        for email_for in cursor.fetchall():
+            pass
+                                    
+        if matricula_esqueceu in matricula_for and email_esqueceu in email_for:
+            print ("Deu bom")
+        else:
+            print ("Não deu bom")
 
     def inserirLivros (self, titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao):
         self.livros.append (Livro (titulo, autor, quantidade_disponivel, genero, faixa_etaria, npaginas, data_de_edicao))
@@ -106,13 +138,14 @@ class Biblioteca:
             print (f"Livro: {i.titulo} \nAutor: {i.autor} \nQuantidade disponível: {i.quantidade_disponivel} \nGênero: {i.genero} \nFaixa Etária: {i.faixa_etaria} \nNúmero de páginas: {i.npaginas} \nData de publicação da edição: {i.data_de_edicao}")
 
     def emprestarLivro (self):
+        pass
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel
         se nao: não é possivel emprestar'''
 
-        '''Inserir na tabela de livros emprestados o clienmte que pegou e o titulo do livro
+        '''Inserir na tabela de livros emprestados o cliente que pegou e o titulo do livro
         
-        Deposi fazer uma função para devolver o livro:
+        Depois fazer uma função para devolver o livro:
         deletando o livro da tabela livros emprestados com select e where matricula
         '''

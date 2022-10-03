@@ -1,4 +1,4 @@
-from ProjetoClass import *
+from Mariaclass import *
 from datetime import date
 import time
 from time import sleep
@@ -42,7 +42,7 @@ while True:
                 print ("Sua senha deve ter ao menos 8 dígitos, pelo menos 1 letra maiúscula e 1 caracter especial!")
                 print ("Digite uma senha válida:")
                 senha = input (">> ")
-                palavra_chave=input("escreva uma palavra chave para que possamos redefinir sua senha caso precise\nEx:comida favorita\n.\n\nCUIDADO se você esquecer a palavra chave não havera como recuperar a senha\n")
+                palavra_chave=input("escreva uma palavra chave para que possamos usar pra lhe ajudar mais tarde\n")
                 print ()
 
                 bio = Biblioteca ()
@@ -55,33 +55,8 @@ while True:
 
                 break
             break
-#AQUI
+
         elif loginOption == "3":
-<<<<<<< HEAD:Projeto1.py
-            while True :
-                print("digite abaixo sua palavra chave para que podemos redefinir sua senha\nEx:sua comida predileta\n se você quiser voltar digite 3")
-                verificar_palavra_chave=input(":")
-                cursor.execute('SELECT palavra-chave FROM cadastro')#PROBLEMA
-                for jabuticaba in cursor.fetchall():                # AQUI
-        
-                    if verificar_palavra_chave == jabuticaba :
-                        print("palavra chave certa\ncrie sua nova senha\n")
-                        senha2=input(":")
-                        emailCF=input("digite o email dessa conta por favor\n")
-                        cursor.execute(f'UPDATE cadastro SET senha = ? WHERE email = {emailCF}',(senha2))
-                        conexao.commit()
-                        print("senha criada com sucesso\n")
-                        pass
-                    if verificar_palavra_chave == '3' :
-                        print("saindo...\n\n")
-                    
-                    
-                    else:
-                        verificar_palavra_chave != jabuticaba 
-                        print("essa não é sua palavra chave\npara sair digite 3")
-                        continue
-                        
-=======
             email_esqueceu = input (">> ")
             senha_esqueceu = input (">> ")
             
@@ -91,7 +66,6 @@ while True:
             recuperar.recuperarSenha ()
             break
 
->>>>>>> b4189a45e8bc8d5639858762f5dd639ba8453ac2:Maria.py
         elif loginOption == "4":
             continue
 

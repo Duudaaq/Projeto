@@ -1,4 +1,4 @@
-from ProjetoClass import *
+from Mariaclass import *
 from datetime import date
 import time
 from time import sleep

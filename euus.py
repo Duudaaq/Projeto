@@ -33,15 +33,12 @@ Seja muito bem vindo *-*
     
 Vamos começar seu cadastro''')
     print()
-    nome = input("Digite seu nome completo.\n")
-    email = input ("Digite seu email.\n")
     matricula = ""
     ano = datetime.date.today()
-    cont = random.randint(10,20)
-    f = random.randint(1,9)
-    for i in range (1,2):
-        cont += 1
-        print(f"Sua matrícula é {ano.year}.{ano.month}{f}-{cont}")
+    cont = random.randint(10,99)
+    f = random.randint(10,99)
+    cont += 1
+    print(f"Sua matrícula é {ano.year}.{f}{cont}")
     
     
     

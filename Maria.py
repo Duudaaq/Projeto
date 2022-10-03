@@ -1,5 +1,4 @@
 from ProjetoClass import *
-# from abc import ABC, abstractmethod 
 from datetime import date
 import time
 from time import sleep
@@ -27,8 +26,8 @@ while True:
         loginOption = input (">> ")
 
         if loginOption == "1":
-            email = input ("Digite seu e-mail:")
-            senha = input ("Digite sua senha:")
+            matricula = int (input ("Digite seu e-mail: \n"))
+            senha = input ("Digite sua senha: \n")
 
         elif loginOption == "2":
             print ()
@@ -58,8 +57,15 @@ while True:
             break
 
         elif loginOption == "3":
-            pass
+            email_esqueceu = input (">> ")
+            senha_esqueceu = input (">> ")
+            
+            recuperar = Biblioteca ()
+            recuperar.recuperarSenha (email_esqueceu, senha_esqueceu)
         
+            recuperar.recuperarSenha ()
+            break
+
         elif loginOption == "4":
             continue
 
@@ -109,24 +115,8 @@ while True:
             continue
 
     else:
-        print ("Opçao incorreta!")
+        print ("Opção incorreta!")
         continue
     
 cursor.close()
 conexao.close ()
-
-# bio = Biblioteca ()
-
-# bio.inserirCliente (nome.title(), idade)
-
-# livro = input ("Nome do livro: \n")
-# autor = input ("Autor: \n")
-# data = int (input ("Data de publicação: \n"))
-# faixa = int (input ("Classificação etária: \n"))
-
-# bio.inserirLivros (livro.title(), autor.title(), data, faixa)
-
-# print()
-# bio.printarClientes()
-# print()
-# bio.printarLivros()

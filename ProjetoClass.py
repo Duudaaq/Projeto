@@ -107,9 +107,9 @@ class Biblioteca:
             pass
         
         if matricula_login in matricula_for and senha_login in senha_for:
-            print ("Deu bom")
+            pass
         else:
-            print ("Não deu bom")
+            print ("Matrícula ou senha incorretas.")
 
     def recuperarSenha (self):
         matricula_esqueceu = input ("Digite sua matrícula: \n")

@@ -28,6 +28,7 @@ while True:
         if loginOption == "1":
             bio = Biblioteca ()
             bio.loginCliente ()
+            bio.printarLivros ()
             break
 
         elif loginOption == "2":

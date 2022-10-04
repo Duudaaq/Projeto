@@ -78,6 +78,8 @@ while True:
         print ("[1] Ver acervo")
         print ("[2] Cadastrar novo livro")
         print ("[3] Voltar")
+        print ("[4] Pesquisa")                                                                                  
+    
         livroOption = input (">> ")
 
         if livroOption == "1":
@@ -110,6 +112,11 @@ while True:
 
         elif livroOption == "3":
             continue
+        
+        elif livroOption == "4":
+            bio = Biblioteca ()
+            bio.printarGenero ()
+            
         else:
             print ("Opção incorreta!")
             continue

@@ -126,7 +126,15 @@ class Biblioteca:
             print (f"Livro: {i [1]}")
             print (f"Quantidade disponível: {i [3]}")
             print ()
-
+            
+    def printarGenero (self):
+        genero = input ("Digite o gênero.\n")
+        cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE genero = '{genero}'")
+        for i in cursor.fetchall():
+            pass            
+        if genero in i:
+            print (i)
+   
     def emprestarLivro (self):
         pass
 

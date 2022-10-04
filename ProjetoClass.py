@@ -17,8 +17,6 @@ for linha in cursor.fetchall ():
 
 # cursor.execute ("DELETE FROM cadastro")
 # conexao.commit ()
-# cursor.execute ("DELETE FROM livros_na_estante")
-# conexao.commit ()
 
 def escrever (texto):
     for letra in texto:
@@ -90,7 +88,7 @@ class Biblioteca:
 
     def inserirCliente (self, nome, dataCompleta, email, senha):
         self.membro = (Cliente (nome, dataCompleta, email, senha))
-        cursor.execute (f"INSERT INTO cadastro (nome, data_de_aniversario, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha))
+        cursor.execute (f"INSERT INTO cadastro (nome, idade, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha))
         conexao.commit ()
         print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
@@ -146,7 +144,6 @@ class Biblioteca:
             print ()
 
     def emprestarLivro (self):
-
         livro_emprestado = input ("Que livro deseja emprestar? \n")
         cursor.execute (f"SELECT titulo, quantidade_disponivel,autor FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
         for i in cursor.fetchall():
@@ -160,6 +157,12 @@ class Biblioteca:
                 if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
                     cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
                     conexao.commit ()
+
+    def verLivroEmprestado (self, matricula_verificarLivro):
+        self.matricula_verificarLivro = matricula_verificarLivro
+        cursor.execute (f"SELECT titulo FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
+        for i in cursor.fetchall():
+            print (i)
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel

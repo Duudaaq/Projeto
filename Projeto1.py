@@ -30,13 +30,23 @@ while True:
             bio.loginCliente ()
             print ("[1] Emprestar novo livro")
             print ("[2] Ver livros emprestados")
-            print ("[3] Devolver livro emprestado")
+            print ("[3] Devolver livro(s) emprestado(s)")
+            print ("[4] Sair da conta")
+            logon = input (">> ")
+
+            if logon == "1":
+                print ()
+                sleep (2)
+                bio.printarLivros ()
+                bio.emprestarLivro ()
+                break
+
+            elif logon == "2":
+                matricula = input ("Digite novamente sua matrícula:")
+                bio.verLivroEmprestado (matricula)
             
-            print ()
-            sleep (2)
-            bio.printarLivros ()
-            bio.emprestarLivro ()
-            break
+            elif logon == "3":
+                pass
 
         elif loginOption == "2":
             print ()

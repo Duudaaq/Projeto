@@ -15,6 +15,7 @@ while True:
     print ()
     print ("[1] Acessar Biblioteca")
     print ("[2] Nosso Acervo")
+    print ("[3] Exit")
     escolha = input (">> ")
 
     if escolha == "1":
@@ -28,6 +29,7 @@ while True:
         if loginOption == "1":
             bio = Biblioteca ()
             bio.loginCliente ()
+            print ()
             print ("[1] Emprestar novo livro")
             print ("[2] Ver livros emprestados")
             print ("[3] Devolver livro(s) emprestado(s)")
@@ -42,7 +44,7 @@ while True:
                 break
 
             elif logon == "2":
-                matricula = input ("Digite novamente sua matrícula:")
+                matricula = input ("Digite novamente sua matrícula: \n")
                 bio.verLivroEmprestado (matricula)
             
             elif logon == "3":
@@ -126,9 +128,11 @@ while True:
             print ("Opção incorreta!")
             continue
 
+    elif escolha == "3":
+        break
+
     else:
-        print ("Opção incorreta!")
-        continue
+        print ("Opção incorreta.")
     
 cursor.close()
 conexao.close ()

@@ -107,8 +107,8 @@ class Biblioteca:
             if matricula_login in listaMatricula and senha_login in senha_for:
                 break
             else:
-                print ("Matrícula ou senha incorretas.")
-                self.loginCliente()
+                print ("Matrícula ou senha incorr etas.")
+                self.loginCliente ()
             
     def recuperarSenha (self):
         matricula_esqueceu = input ("Digite sua matrícula: \n")
@@ -145,7 +145,7 @@ class Biblioteca:
 
     def emprestarLivro (self):
         livro_emprestado = input ("Que livro deseja emprestar? \n")
-        cursor.execute (f"SELECT titulo, quantidade_disponivel,autor FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        cursor.execute (f"SELECT titulo, quantidade_disponivel, autor FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
         for i in cursor.fetchall():
             titulo, y, autor = i
             cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE titulo = '{titulo}' and autor = '{autor}'", (y-1,))
@@ -157,12 +157,13 @@ class Biblioteca:
                 if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
                     cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
                     conexao.commit ()
+        print (f"Livro {livro_emprestado} emprestado.")
 
     def verLivroEmprestado (self, matricula_verificarLivro):
         self.matricula_verificarLivro = matricula_verificarLivro
-        cursor.execute (f"SELECT titulo FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
+        cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
         for i in cursor.fetchall():
-            print (i)
+            print (i [2])
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel

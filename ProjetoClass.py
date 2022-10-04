@@ -42,7 +42,6 @@ class Pessoa:
         dia = int (f"{listaData.pop(0)}{listaData.pop(0)}")
         mes = int (f"{listaData.pop(0)}{listaData.pop(0)}")
         ano = int (f"{listaData.pop(0)}{listaData.pop(0)}{listaData.pop(0)}{listaData.pop(0)}")
-        # dataCompleta = (f"{dia}/{mes}/{ano}")
         idade = self.dataNascimento (date (ano, mes, dia))
         return idade
 
@@ -145,18 +144,29 @@ class Biblioteca:
             print ()
 
     def emprestarLivro (self):
+        # self.quantidadeLivro = quantidadeLivro
+        # self.quantidadeLivro -= 1
+        # livro_emprestado = input ("Qual livro deseja que seja emprestado? \n")
+        # cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        # cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel WHERE {self.quantidadeLivro}")
+        # conexao.commit()
+        # cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo [1]))
+        # conexao.commit()
 
-        livro_emprestado = input ("Qual livro deseja que seja emprestado? \n")
+        livro_emprestado = input ("Que livro deseja emprestar? \n")
+        y = 0
         cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
-        quantidadeLivro = int
-        cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel -= 1 WHERE {livro_emprestado}")
-        conexao.commit()
-        cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo [1]))
-        conexao.commit()
-
-        cursor.execute (f"SELECT * FROM livros_na_estante")
         for i in cursor.fetchall():
-            print (i)
+            y -= 1
+            cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE quantidade_disponivel = '{y}'", ('10',))
+            conexao.commit ()
+            cursor.execute (f"SELECT matricula FROM cadastro")
+            cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo[0]))
+            conexao.commit ()
+
+        # cursor.execute (f"SELECT * FROM livros_na_estante")
+        # for i in cursor.fetchall():
+        #     print (i)
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel

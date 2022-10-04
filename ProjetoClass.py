@@ -58,7 +58,7 @@ class Pessoa:
         return data
 
 class Cliente (Pessoa):
-    def __init__ (self, nome, dataCompleta, email, senha, palavra_chave) -> None:
+    def __init__ (self, nome, dataCompleta, email, senha) -> None:
         super().__init__ (nome)
         self.dataCompleta = dataCompleta
         self.idade = self.calculadora (self.dataCompleta)
@@ -66,7 +66,6 @@ class Cliente (Pessoa):
         self.matricula = self.matriculaFunc ()
         self.email = email
         self.senha = senha
-        self.palavra_chave = palavra_chave
 
     def matriculaFunc (self):
         ano = datetime.date.today().strftime('%Y')
@@ -144,6 +143,7 @@ class Biblioteca:
             print ()
 
     def emprestarLivro (self):
+        
         # self.quantidadeLivro = quantidadeLivro
         # self.quantidadeLivro -= 1
         # livro_emprestado = input ("Qual livro deseja que seja emprestado? \n")
@@ -151,7 +151,7 @@ class Biblioteca:
         # cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel WHERE {self.quantidadeLivro}")
         # conexao.commit()
         # cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo [1]))
-        # conexao.commit()
+        # conexao.commit() 2022.5077 They2403 Theyllor Menezes De Sousa
 
         livro_emprestado = input ("Que livro deseja emprestar? \n")
         y = 0
@@ -160,9 +160,13 @@ class Biblioteca:
             y -= 1
             cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE quantidade_disponivel = '{y}'", ('10',))
             conexao.commit ()
-            cursor.execute (f"SELECT matricula FROM cadastro")
-            cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo[0]))
-            conexao.commit ()
+            matricula_verifica = input ("Digite sua matrícula novamente: \n")
+            nomeVerifica = input ("Digite seu nome: \n")
+            cursor.execute (f"SELECT matricula, nome FROM cadastro")
+            for matricula_i in cursor.fetchall():
+                if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
+                    cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
+                    conexao.commit ()
 
         # cursor.execute (f"SELECT * FROM livros_na_estante")
         # for i in cursor.fetchall():
@@ -177,3 +181,19 @@ class Biblioteca:
         Depois fazer uma função para devolver o livro:
         deletando o livro da tabela livros emprestados com select e where matricula
         '''
+
+        # self.func = self.printarLivros()
+        #     print (self.func)
+        #     livro_emprestado = input ("Que livro deseja emprestar? \n")
+        #     y = 0
+        #     cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        #     for i in cursor.fetchall():
+        #         y -= 1
+        #         cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE quantidade_disponivel = '{y}'", ('10',))
+        #         conexao.commit ()
+        #         matricula_verifica = input ("Digite sua matrícula novamente: \n")
+        #         cursor.execute (f"SELECT matricula FROM cadastro")
+        #         for matricula_i in cursor.fetchall():
+        #             if matricula_verifica in matricula_i:
+        #                 cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, self.membro.nome, self.livros.titulo[0]))
+        #                 conexao.commit ()

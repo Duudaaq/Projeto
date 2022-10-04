@@ -47,8 +47,6 @@ while True:
                 print ("Sua senha deve ter ao menos 8 dígitos, pelo menos 1 letra maiúscula e 1 caracter especial!")
                 print ("Digite uma senha válida:")
                 senha = input (">> ")
-                palavra_chave = input("escreva uma palavra chave para que possamos usar pra lhe ajudar mais tarde\n")
-                print ()
 
                 bio = Biblioteca ()
                 bio.inserirCliente (nome.title(), data, email, senha)

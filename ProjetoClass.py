@@ -98,17 +98,20 @@ class Biblioteca:
         matricula_login = input ("Matrícula: \n")
         senha_login = input ("Senha: \n")
         cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_login}'")
+        listaMatricula = []
         for matricula_for in cursor.fetchall():
-            pass
+            listaMatricula = matricula_for[0]
         cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha_login}'")
         for senha_for in cursor.fetchall():
             pass
         
-        if matricula_login in matricula_for and senha_login in senha_for:
-            pass
-        else:
-            print ("Matrícula ou senha incorretas.")
-
+        while True:
+            if matricula_login in listaMatricula and senha_login in senha_for:
+                break
+            else:
+                print ("Matrícula ou senha incorretas.")
+                self.loginCliente()
+            
     def recuperarSenha (self):
         matricula_esqueceu = input ("Digite sua matrícula: \n")
         email_esqueceu = input ("Digite seu e-mail: \n")
@@ -123,8 +126,8 @@ class Biblioteca:
                                     
         if matricula_esqueceu in matricula_for and email_esqueceu in email_for:
             cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{matricula_esqueceu}'")
-            for matricula_for in cursor.fetchall():
-                pass
+            for i in cursor.fetchall():
+                print (i)
 
         else:
             print ("Não deu bom")
@@ -143,22 +146,12 @@ class Biblioteca:
             print ()
 
     def emprestarLivro (self):
-        
-        # self.quantidadeLivro = quantidadeLivro
-        # self.quantidadeLivro -= 1
-        # livro_emprestado = input ("Qual livro deseja que seja emprestado? \n")
-        # cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
-        # cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel WHERE {self.quantidadeLivro}")
-        # conexao.commit()
-        # cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (self.membro.matricula, self.membro.nome, self.livros.titulo [1]))
-        # conexao.commit() 2022.5077 They2403 Theyllor Menezes De Sousa
 
         livro_emprestado = input ("Que livro deseja emprestar? \n")
-        y = 0
-        cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        cursor.execute (f"SELECT titulo, quantidade_disponivel,autor FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
         for i in cursor.fetchall():
-            y -= 1
-            cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE quantidade_disponivel = '{y}'", ('10',))
+            titulo, y, autor = i
+            cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE titulo = '{titulo}' and autor = '{autor}'", (y-1,))
             conexao.commit ()
             matricula_verifica = input ("Digite sua matrícula novamente: \n")
             nomeVerifica = input ("Digite seu nome: \n")
@@ -167,10 +160,6 @@ class Biblioteca:
                 if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
                     cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
                     conexao.commit ()
-
-        # cursor.execute (f"SELECT * FROM livros_na_estante")
-        # for i in cursor.fetchall():
-        #     print (i)
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel
@@ -181,19 +170,3 @@ class Biblioteca:
         Depois fazer uma função para devolver o livro:
         deletando o livro da tabela livros emprestados com select e where matricula
         '''
-
-        # self.func = self.printarLivros()
-        #     print (self.func)
-        #     livro_emprestado = input ("Que livro deseja emprestar? \n")
-        #     y = 0
-        #     cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
-        #     for i in cursor.fetchall():
-        #         y -= 1
-        #         cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE quantidade_disponivel = '{y}'", ('10',))
-        #         conexao.commit ()
-        #         matricula_verifica = input ("Digite sua matrícula novamente: \n")
-        #         cursor.execute (f"SELECT matricula FROM cadastro")
-        #         for matricula_i in cursor.fetchall():
-        #             if matricula_verifica in matricula_i:
-        #                 cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, self.membro.nome, self.livros.titulo[0]))
-        #                 conexao.commit ()

@@ -28,6 +28,10 @@ while True:
         if loginOption == "1":
             bio = Biblioteca ()
             bio.loginCliente ()
+            print ("[1] Emprestar novo livro")
+            print ("[2] Ver livros emprestados")
+            print ("[3] Devolver livro emprestado")
+            
             print ()
             sleep (2)
             bio.printarLivros ()

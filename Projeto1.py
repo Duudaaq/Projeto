@@ -28,6 +28,7 @@ while True:
             loginOption = input (">> ")
 
             if loginOption == "1":
+                print ()
                 bio = Biblioteca ()
                 bio.loginCliente ()
                 while True:
@@ -51,8 +52,8 @@ while True:
                         if mais == "1":
                             continue
                         else:
-                            print ("Obrigado.")
-                                                
+                            break
+                                                                        
                     elif logon == "2":
                         print()
                         bio.verLivroEmprestado ()
@@ -72,27 +73,38 @@ while True:
             elif loginOption == "2":
                 print ()
                 nome = input ("Digite seu nome completo: \n")
+                print()
+                print ("Digite sua data de nascimento:")
                 while True:
-                    data = input ("Digite sua data de nascimento: \n")
+                    data = input ("(Apenas números.) \n")
                     if not data.isdigit():
-                        print ("Digite apenas números.")
                         continue
-                    email = input ("Digite seu e-mail: \n")
-                    print ()
-                    print ("Sua senha deve ter ao menos 8 dígitos, pelo menos 1 letra maiúscula e 1 caracter especial!")
-                    print ("Digite uma senha válida:")
-                    senha = input (">> ")
-
-                    bio = Biblioteca ()
-                    bio.inserirCliente (nome.title(), data, email, senha)
-                    
-                    sleep (2)
-                    print ()
-                    print ("Cadastro realizado com sucesso!")
-                    print ()
-
-                    break
-                break
+                    else:
+                        break
+                print ()
+                email = input ("Digite seu e-mail: \n")
+                print ()
+                print ("Sua senha deve ter ao menos 8 caracteres, 1 número, 1 caractere maiúsculo e 1 caractere especial.")
+                while True:
+                    senha = input ("Digite sua senha: \n")
+                    if len (senha) < 7:
+                        print ("A senha deve ter ao menos 8 caracteres:")
+                    elif senha.islower():
+                        print ("A senha deve ter ao menos 1 caractere maiúsculo:")
+                    elif senha.isalpha():
+                        print ("A senha deve ter ao menos 1 número:")
+                    elif senha.isalnum():
+                        print ("A senha deve ter ao menos 1 caractere especial:")
+                    else:
+                        break
+                print ()
+                bio = Biblioteca ()
+                bio.inserirCliente (nome.title(), data, email, senha)
+                
+                sleep (2)
+                print ()
+                print ("Cadastro realizado com sucesso!")
+                continue
 
             elif loginOption == "3":
 
@@ -101,7 +113,7 @@ while True:
                 break
 
             elif loginOption == "4":
-                continue
+                break
 
             else:
                 print ("Opção incorreta!")

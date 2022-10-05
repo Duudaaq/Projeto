@@ -93,22 +93,25 @@ class Biblioteca:
         print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
     def loginCliente (self):
-        matricula_login = input ("Matrícula: \n")
-        senha_login = input ("Senha: \n")
-        cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_login}'")
-        listaMatricula = []
-        for matricula_for in cursor.fetchall():
-            listaMatricula = matricula_for[0]
-        cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha_login}'")
-        for senha_for in cursor.fetchall():
-            pass
-        
         while True:
-            if matricula_login in listaMatricula and senha_login in senha_for:
+            matricula_login = input ("Matrícula: \n")
+            senha_login = input ("Senha: \n")
+            
+            cursor.execute (f"SELECT matricula FROM cadastro WHERE matricula = '{matricula_login}'")
+            listaMatricula = []
+            for matricula_for in cursor.fetchall():
+                listaMatricula = matricula_for [0]
+
+            cursor.execute (f"SELECT senha FROM cadastro WHERE senha = '{senha_login}'")
+            listaSenha = []
+            for senha_for in cursor.fetchall():
+                listaSenha = senha_for [0]
+            
+            if matricula_login in listaMatricula and senha_login in listaSenha:
                 break
             else:
-                print ("Matrícula ou senha incorr etas.")
-                self.loginCliente ()
+                print ("Matrícula ou senha incorretas.")
+                continue
             
     def recuperarSenha (self):
         matricula_esqueceu = input ("Digite sua matrícula: \n")
@@ -157,26 +160,40 @@ class Biblioteca:
                 if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
                     cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
                     conexao.commit ()
+                    print ()
                     print (f"Livro {livro_emprestado} emprestado para você.")
 
     def verLivroEmprestado (self):
-        matricula_verificarLivro = input ("Digite sua matricula novamente: \n")
-        cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
-        for i in cursor.fetchall():
-            if matricula_verificarLivro in i:
-                print()
-                print ("Livros emprestados para você:")
-                print (i [2])
+        while True:
+            matricula_verificarLivro = input ("Digite sua matricula novamente: \n")
+
+            cursor.execute (f"SELECT matricula FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
+            for matricula_for in cursor.fetchall():
+                pass
+
+            if len (matricula_verificarLivro) == 9:
+                cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
+                verificar = cursor.fetchall()
+                print ()
+                if len (verificar) != 0:
+                    cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
+                    print ("Livros emprestados para você:")
+                    for i in cursor.fetchall():
+                        print(f"- {i [2]}")
+                    break
+                else:
+                    print ("Nenhum livro emprestado registrado.")
+                    break
             else:
                 print ("Matricula incorreta.")
-                self.verLivroEmprestado()
+                continue
 
-        '''Verificação se tem livros para emrestar
-        Se tiver: diminuir 1 de livro disponivel
-        se nao: não é possivel emprestar'''
+'''Verificação se tem livros para emrestar
+Se tiver: diminuir 1 de livro disponivel
+se nao: não é possivel emprestar'''
 
-        '''Inserir na tabela de livros emprestados o cliente que pegou e o titulo do livro
-        
-        Depois fazer uma função para devolver o livro:
-        deletando o livro da tabela livros emprestados com select e where matricula
-        '''
+'''Inserir na tabela de livros emprestados o cliente que pegou e o titulo do livro
+
+Depois fazer uma função para devolver o livro:
+deletando o livro da tabela livros emprestados com select e where matricula
+'''

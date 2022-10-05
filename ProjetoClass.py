@@ -157,13 +157,19 @@ class Biblioteca:
                 if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
                     cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
                     conexao.commit ()
-        print (f"Livro {livro_emprestado} emprestado.")
+                    print (f"Livro {livro_emprestado} emprestado para você.")
 
-    def verLivroEmprestado (self, matricula_verificarLivro):
-        self.matricula_verificarLivro = matricula_verificarLivro
+    def verLivroEmprestado (self):
+        matricula_verificarLivro = input ("Digite sua matricula novamente: \n")
         cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
         for i in cursor.fetchall():
-            print (i [2])
+            if matricula_verificarLivro in i:
+                print()
+                print ("Livros emprestados para você:")
+                print (i [2])
+            else:
+                print ("Matricula incorreta.")
+                self.verLivroEmprestado()
 
         '''Verificação se tem livros para emrestar
         Se tiver: diminuir 1 de livro disponivel

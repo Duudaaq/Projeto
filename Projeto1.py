@@ -99,7 +99,8 @@ while True:
             print ()
             print ("[1] Ver acervo")
             print ("[2] Cadastrar novo livro")
-            print ("[3] Voltar")
+            print ("[3] Pesquisa")
+            print ("[4] Voltar")
             livroOption = input (">> ")
 
             match livroOption:
@@ -114,13 +115,16 @@ while True:
                     continue
 
                 case "3":
-                    continue
-                case _:
-                    print ("Opção incorreta!")
+                       
+                    bio = Biblioteca ()
+                    bio.printarPesquisar ()
+            
+                case "4":
                     continue
 
-        case "3":
-            break
+                case _:
+                    print ("Opção incorreta!")
+                    break
 
         case _:
             print ("Opção incorreta.")

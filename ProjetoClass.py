@@ -211,6 +211,37 @@ class Biblioteca:
         for i in cursor.fetchall():
             contador += 1
             print (f"{contador} - {i [1]}")
+            
+    def printarPesquisar(self):
+        print ()
+        print ("[1] Nome")
+        print ("[2] Autor")
+        print ("[3] Gênero")
+        print ()
+        while True: 
+            pesquisa = input ("Como você desja fazer sua pesquisa?\n")
+            print()
+
+            if pesquisa == "1":
+                titulo = input ("Digite o nome.\n")
+                cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo LIKE '%{titulo}%' OR titulo LIKE '%{titulo}%'")
+                for i in cursor.fetchall():
+                    print(i [1])
+                break
+            elif pesquisa == "2":
+                autor = input ("Digite o autor.\n")
+                cursor.execute (f"SELECT * FROM livros_na_estante WHERE autor LIKE '%{autor}%' OR titulo LIKE '%{autor}%'")
+                for i in cursor.fetchall():
+                    print(i [1])
+                break
+            elif pesquisa == "3":
+                genero = input ("Digite o gênero.\n")
+                cursor.execute (f"SELECT * FROM livros_na_estante WHERE genero LIKE '%{genero}%' OR genero LIKE '%{genero}%'")
+                for i in cursor.fetchall():
+                    print(i [1])
+                break
+            else:
+                pass
 
     def emprestarLivro (self):
         livro_emprestado = input ("Que livro deseja emprestar? \n")

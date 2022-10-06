@@ -117,7 +117,7 @@ class Biblioteca:
         print ("Cadastro realizado com sucesso!")
         print ()
         self.membro = (Cliente (nome.title(), dataCompleta, email, senha))
-        cursor.execute (f"INSERT INTO cadastro (nome, idade, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome, self.membro.idade, self.membro.matricula, email, senha))
+        cursor.execute (f"INSERT INTO cadastro (nome, idade, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome.title(), self.membro.idade, self.membro.matricula, email, senha))
         conexao.commit ()
         print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
 
@@ -198,7 +198,6 @@ class Biblioteca:
         print ()
 
     def printarLivros (self):
-        print ()
         cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0")
         print ("Livros disponíveis:")
         print()
@@ -209,20 +208,34 @@ class Biblioteca:
 
     def emprestarLivro (self):
         livro_emprestado = input ("Que livro deseja emprestar? \n")
-        cursor.execute (f"SELECT titulo, quantidade_disponivel, autor FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
-        for i in cursor.fetchall():
-            titulo, y, autor = i
-            cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE titulo = '{titulo}' and autor = '{autor}'", (y-1,))
-            conexao.commit ()
+        print ()
+        cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        for livro_i in cursor.fetchall():
+            pass
+        if livro_emprestado in livro_i: #local variable 'livro_i' referenced before assignment (FALAR COM PROFESSOR)
             matricula_verifica = input ("Digite sua matrícula novamente: \n")
-            nomeVerifica = input ("Digite seu nome: \n")
-            cursor.execute (f"SELECT matricula, nome FROM cadastro")
+            senha_verifica = input ("Digite sua senha novamente: \n")
+
+            cursor.execute (f"SELECT matricula, senha FROM cadastro")
             for matricula_i in cursor.fetchall():
-                if matricula_verifica in matricula_i and nomeVerifica in matricula_i:
-                    cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nomeVerifica.title(), livro_emprestado))
+                pass
+            if matricula_verifica in matricula_i and senha_verifica in matricula_i:
+                cursor.execute (f"SELECT * FROM cadastro WHERE matricula = '{matricula_verifica}'")
+                for nome_i in cursor.fetchall ():
+                    pass
+                cursor.execute (f"INSERT INTO livros_emprestados (matricula, cliente, titulo) VALUES (?,?,?)", (matricula_verifica, nome_i[3], livro_emprestado))
+                conexao.commit ()
+                cursor.execute (f"SELECT titulo, quantidade_disponivel, autor FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+                for i in cursor.fetchall():
+                    titulo, y, autor = i
+                    cursor.execute (f"UPDATE livros_na_estante SET quantidade_disponivel = ? WHERE titulo = '{titulo}' and autor = '{autor}'", (y-1,))
                     conexao.commit ()
-                    print ()
-                    print (f'Livro "{livro_emprestado}" emprestado para você.')
+                print ()
+                print (f'Livro "{livro_emprestado}" emprestado para você.')
+            else:
+                print ("Matrícula ou senha incorretos. Livro não foi emprestado.")
+        else:
+            print ("Livro não encontrando.")
 
     def verLivroEmprestado (self):
         print()
@@ -297,19 +310,42 @@ class Biblioteca:
 
     def deletarConta (self):
         print ()
-        matricula_deletar = input ("Digite sua matrícula novamente: \n")
-        senha_deletar = input ("Digite sua senha novamente: \n")
+        while True:
+            matricula_deletar = input ("Digite sua matrícula novamente: \n")
+            senha_deletar = input ("Digite sua senha novamente: \n")
 
-        cursor.execute (f"SELECT matricula, senha FROM cadastro WHERE matricula = '{matricula_deletar}'")
-        for i in cursor.fetchall ():
-            if matricula_deletar in i and senha_deletar in i:
-                cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_deletar}'")
-                verificar_livro = cursor.fetchall ()
-                if len (verificar_livro) != 0:
-                    print ("Você ainda tem livros á serem devolvidos!")
+            cursor.execute (f"SELECT matricula, senha FROM cadastro WHERE matricula = '{matricula_deletar}'")
+            for i in cursor.fetchall ():
+                if matricula_deletar in i and senha_deletar in i:
+                    print ()
+                    print ("Tem certeza que deseja excluir sua conta?")
+                    print ("[1] Sim")
+                    print ("[2] Não")
+                    delete = input (">> ")
+                    match delete:
+                        case "1":
+                            cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_deletar}'")
+                            verificar_livro = cursor.fetchall ()
+                            if len (verificar_livro) != 0:
+                                print ()
+                                print ("Você ainda tem livros á serem devolvidos!")
+                                break
+                            else:
+                                cursor.execute (f"DELETE FROM cadastro WHERE matricula = '{matricula_deletar}'")
+                                conexao.commit ()
+                                print ()
+                                print ("Sua conta foi deletada!")
+                                break
+
+                        case "2":
+                            print ("Conta não deletada.")
+                            break
+
+                        case _:
+                            print ("Opção incorreta.")
+                            continue
+
                 else:
-                    cursor.execute (f"DELETE FROM cadastro WHERE matricula = {matricula_deletar}")
-                    conexao.commit ()
-                    print ("Sua conta foi delatada!")
-            else:
-                print ("Cadastro não encontrado.")
+                    print ("Matrícula ou senha incorreto.")
+                    continue
+            break

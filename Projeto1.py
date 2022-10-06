@@ -78,6 +78,7 @@ while True:
                             continue
 
                     case "2":
+                        bio = Biblioteca ()
                         bio.inserirCliente ()
                         continue
 

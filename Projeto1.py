@@ -88,6 +88,9 @@ while True:
 
                     case "4":
                         break
+                    
+                    case "5":
+                        print("codigo feito por Theyllor,Maria e Hudson")
 
                     case _:
                         print ("Opção incorreta!")

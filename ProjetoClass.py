@@ -87,7 +87,13 @@ class Biblioteca:
 
     def inserirCliente (self):
         print ()
-        nome = input ("Digite seu nome completo: \n")
+        while True:
+            nome = input ("Digite seu nome completo: \n")
+            if not nome.isalpha ():
+                print ("Utilize apenas letras para seu nome!")
+                continue
+            else:
+                break
         print()
         print ("Digite sua data de nascimento:")
         while True:
@@ -176,7 +182,7 @@ class Biblioteca:
             print ("Sua senha foi alterada com sucesso!")
 
         else:
-            print ("Não deu bom")
+            print ("Matrícula ou senha incorretos.")
 
     def inserirLivros (self):
         print ()
@@ -201,18 +207,19 @@ class Biblioteca:
         cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0")
         print ("Livros disponíveis:")
         print()
+        contador = 0
         for i in cursor.fetchall():
-            print (f"Livro: {i [1]}")
-            print (f"Quantidade disponível: {i [3]}")
-            print ()
+            contador += 1
+            print (f"{contador} - {i [1]}")
 
     def emprestarLivro (self):
         livro_emprestado = input ("Que livro deseja emprestar? \n")
         print ()
         cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
+        listaLivro = []
         for livro_i in cursor.fetchall():
-            pass
-        if livro_emprestado in livro_i: #local variable 'livro_i' referenced before assignment (FALAR COM PROFESSOR)
+            listaLivro = livro_i [0]
+        if livro_emprestado in listaLivro:
             matricula_verifica = input ("Digite sua matrícula novamente: \n")
             senha_verifica = input ("Digite sua senha novamente: \n")
 

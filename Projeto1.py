@@ -50,13 +50,15 @@ while True:
                                     bio.printarLivros ()
                                     bio.emprestarLivro ()
                                     print()
-                                    print ("Mais alguma coisa?")
+                                    print ("Algo mais?")
                                     print ("[1] Sim")
                                     print ("[2] Não")
                                     mais = input (">> ")
                                     if mais == "1":
                                         continue
                                     else:
+                                        print ()
+                                        print ("Conta deslogada.")
                                         break
                                                                                     
                                 case "2":

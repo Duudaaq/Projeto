@@ -47,7 +47,6 @@ while True:
                                     
                                     print ()
                                     sleep (2)
-                                    bio.printarLivros ()
                                     bio.emprestarLivro ()
                                     print()
                                     print ("Algo mais?")
@@ -115,6 +114,7 @@ while True:
 
                 case "3":
                     continue
+
                 case _:
                     print ("Opção incorreta!")
                     continue

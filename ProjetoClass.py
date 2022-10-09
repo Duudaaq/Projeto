@@ -25,7 +25,7 @@ class Pessoa:
         self.nome = nome
 
     def dataNascimento (self, idade):
-        today = date.today() 
+        today = date.today () 
         age = today.year - idade.year - ((today.month, today.day) < (idade.month, idade.day))
         return age
 
@@ -95,12 +95,16 @@ class Biblioteca:
         print ("Digite sua data de nascimento:")
         while True:
             dataCompleta = input ("(Apenas números.) \n")
-            if not dataCompleta.isdigit():
+            if not dataCompleta.isdigit ():
                 continue
             else:
                 break
         print ()
-        email = input (f"Digite seu e-mail: \n", {'@bookinho.com'})
+        print ("Todos os e-mails no nosso banco de dados são identificados com @bookinho.com")
+        email_errado = input (f"Digite seu e-mail: \n")
+        email_semC = re.sub (r".c(\w*)", "", email_errado)
+        email_semArroba = re.sub (r"@(\w*)", "", email_semC)
+        email = f"{email_semArroba.lower()}@bookinho.com"
         print ()
         print ("Sua senha deve ter ao menos 8 caracteres, 1 número, 1 caractere maiúsculo e 1 caractere especial.")
         while True:

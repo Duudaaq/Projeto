@@ -1,4 +1,4 @@
-from ProjetoClass import *
+from Dudaclass import *
 from datetime import date
 import time
 from time import sleep
@@ -44,9 +44,11 @@ while True:
 
                             match logon:
                                 case "1":
+                                    
                                     print ()
+                                    sleep (2)
                                     bio.emprestarLivro ()
-                                    print ()
+                                    print()
                                     print ("Algo mais?")
                                     print ("[1] Sim")
                                     print ("[2] Não")
@@ -110,11 +112,12 @@ while True:
                     bio.inserirLivros ()
                     bio.printarLivros ()
                     continue
-
+                
                 case "3":
+                    bio.inserirLivros ()
                     bio.printarPesquisar ()
                     continue
-                    
+
                 case "4":
                     continue
 

@@ -17,8 +17,11 @@ for linha in cursor.fetchall ():
 # cursor.execute ("DELETE FROM cadastro")
 # conexao.commit ()
 
-def letraEespaco (str):
-    return all (char.isalpha () or char.isspace () for char in str)
+def escrever (texto):
+    for letra in texto:
+        sys.stdout.write(letra)
+        sys.stdout.flush ()
+        time.sleep (0.02)
 
 class Pessoa:
     def __init__ (self, nome) -> None:
@@ -86,7 +89,7 @@ class Biblioteca:
         print ()
         while True:
             nome = input ("Digite seu nome completo: \n")
-            if not letraEespaco (nome):
+            if not nome.isalpha ():
                 print ("Utilize apenas letras para seu nome!")
                 continue
             else:
@@ -100,7 +103,7 @@ class Biblioteca:
             else:
                 break
         print ()
-        email = input (f"Digite seu e-mail: \n", {'@bookinho.com'})
+        email = input ("Digite seu e-mail: \n")
         print ()
         print ("Sua senha deve ter ao menos 8 caracteres, 1 número, 1 caractere maiúsculo e 1 caractere especial.")
         while True:
@@ -119,7 +122,7 @@ class Biblioteca:
         print ()
         print ("Cadastro realizado com sucesso!")
         print ()
-        self.membro = (Cliente (nome.title (), dataCompleta, email, senha))
+        self.membro = (Cliente (nome.title(), dataCompleta, email, senha))
         cursor.execute (f"INSERT INTO cadastro (nome, idade, matricula, email, senha) VALUES (?, ?, ?, ?, ?)", (nome.title(), self.membro.idade, self.membro.matricula, email, senha))
         conexao.commit ()
         print (f"Membro: {self.membro.nome} \nData de nascimento: {self.membro.data} \nIdade: {self.membro.idade} \nMatrícula: {self.membro.matricula} \nE-mail: {self.membro.email} \nSenha: {len (self.membro.senha) * '*'}")
@@ -201,18 +204,14 @@ class Biblioteca:
         print ()
 
     def printarLivros (self):
-        cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '12'")
+        cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0")
         print ("Livros disponíveis:")
         print()
         contador = 0
-        x = ''
         for i in cursor.fetchall():
             contador += 1
-            if contador >= 10:
-                x = " "
             print (f"{contador} - {i [1]}")
-            print (f"{x}    Quantidade disponível: {i [3]}")
-            print ()
+            print (f"Quantidade disponível: {i [3]}")
 
     def printarPesquisar(self):
         print ()
@@ -245,28 +244,23 @@ class Biblioteca:
             else:
                 pass
 
-
     def emprestarLivro (self):
         matricula_verifica = input ("Digite sua matrícula novamente: \n")
-        sleep (2)
         cursor.execute (f"SELECT * FROM cadastro WHERE matricula = '{matricula_verifica}'")
         for idade_i in cursor.fetchall ():
             pass
 
         if int (idade_i [4]) <= 10:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '10'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '10'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
 
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -297,19 +291,16 @@ class Biblioteca:
                 print ("Livro não encontrando.")
 
         elif int (idade_i [4]) <= 11:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '11'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '11'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
 
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -341,19 +332,16 @@ class Biblioteca:
                 print ("Livro não encontrando.")
 
         elif int (idade_i [4]) <= 12:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '12'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '12'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
 
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -385,19 +373,16 @@ class Biblioteca:
                 print ("Livro não encontrando.")
 
         elif int (idade_i [4]) <= 13:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '13'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '13'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
-                
+                print (f"Quantidade disponível: {i [3]}")
+
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -429,19 +414,16 @@ class Biblioteca:
                 print ("Livro não encontrando.")
 
         elif int (idade_i [4]) <= 14:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '14'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '14'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
 
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -473,19 +455,16 @@ class Biblioteca:
                 print ("Livro não encontrando.")
 
         elif int (idade_i [4]) <= 15:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '15'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '15'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
 
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -517,19 +496,16 @@ class Biblioteca:
                 print ("Livro não encontrando.")
 
         elif int (idade_i [4]) <= 16:
-            cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '16'")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE faixa_etaria <= '16'")
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
 
+            print ()
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()
             cursor.execute (f"SELECT titulo FROM livros_na_estante WHERE titulo = '{livro_emprestado}'")
@@ -565,14 +541,11 @@ class Biblioteca:
             print ("Livros disponíveis:")
             print()
             contador = 0
-            x = ''
             for i in cursor.fetchall():
                 contador += 1
-                if contador >= 10:
-                    x = " "
                 print (f"{contador} - {i [1]}")
-                print (f"{x}    Quantidade disponível: {i [3]}")
-                print ()
+                print (f"Quantidade disponível: {i [3]}")
+            print ()
 
             livro_emprestado = input ("Que livro deseja emprestar? \n")
             print ()

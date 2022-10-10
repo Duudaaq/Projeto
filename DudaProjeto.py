@@ -114,7 +114,7 @@ while True:
                     continue
                 
                 case "3":
-                    bio.inserirLivros ()
+                    bio = Biblioteca()
                     bio.printarPesquisar ()
                     continue
 

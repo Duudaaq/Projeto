@@ -111,11 +111,11 @@ class Biblioteca:
             senha = input ("Digite sua senha: \n")
             if len (senha) < 7:
                 print ("A senha deve ter ao menos 8 caracteres:")
-            elif senha.islower():
+            elif senha.islower ():
                 print ("A senha deve ter ao menos 1 caractere maiúsculo:")
-            elif senha.isalpha():
+            elif senha.isalpha ():
                 print ("A senha deve ter ao menos 1 número:")
-            elif senha.isalnum():
+            elif senha.isalnum ():
                 print ("A senha deve ter ao menos 1 caractere especial:")
             else:
                 break
@@ -204,10 +204,67 @@ class Biblioteca:
         print ("Cadastro realizado com sucesso!")
         print ()
 
+    def deleteLivro (self):
+        while True:
+            print ()
+            deletarLivro = input ("Qual livro deseja deletar? \n")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo = '{deletarLivro}'")
+            listaDeletarLivro = []
+            for i in cursor.fetchall ():
+                listaDeletarLivro = i
+            if deletarLivro in listaDeletarLivro:
+                while True:
+                    print ()
+                    print (f'Você está deletando "{deletarLivro}".')
+                    print ("Tem certeza disso?")
+                    print ("[1] Sim")
+                    print ("[2] Não")
+                    escolhaDeletar = input (">> ")
+                    if escolhaDeletar == "1":
+                        cursor.execute (f"DELETE FROM livros_na_estante WHERE titulo = '{deletarLivro}'")
+                        conexao.commit ()
+                        print ()
+                        print (f"Livro {deletarLivro} retirado da estante.")
+                        print ()
+                        break
+                    elif escolhaDeletar == "2":
+                        print ()
+                        print (f"Livro {deletarLivro} não foi retirado da estante")
+                        break
+                    else:
+                        print ("Opção incorreta!")
+                        continue
+                break
+            else:
+                ("Livro não encontrado.")
+                continue
+
+    def mudarLivro (self):
+        while True:
+            print ()
+            atualizarLivro = input ("Que livro deseja alterar? \n")
+            cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo = '{atualizarLivro}'")
+            listaMudarLivro = []
+            for i in cursor.fetchall ():
+                listaMudarLivro = i
+            if atualizarLivro in listaMudarLivro:
+                print ()
+                print (f'Você deseja alterar "{atualizarLivro}" para?')
+                livro_alterado = input (">> ")
+                cursor.execute (f"UPDATE livros_na_estante SET titulo = ? WHERE titulo = '{atualizarLivro}'", (livro_alterado,))
+                conexao.commit ()
+                print ()
+                print (f'Livro "{atualizarLivro}" foi atualizado para "{livro_alterado}" com sucesso.')
+                break
+            else:
+                print ("Livro não encontrado.")
+                continue
+
     def printarLivros (self):
         cursor.execute (f"SELECT * FROM livros_na_estante WHERE quantidade_disponivel > 0 AND faixa_etaria <= '12'")
+        print ()
         print ("Livros disponíveis:")
-        print()
+        print ()
         contador = 0
         x = ''
         for i in cursor.fetchall():
@@ -219,35 +276,84 @@ class Biblioteca:
             print ()
 
     def printarPesquisar(self):
-        print ()
-        print ("[1] Nome")
-        print ("[2] Autor")
-        print ("[3] Gênero")
-        print ()
         while True: 
-            pesquisa = input ("Como você desja fazer sua pesquisa?\n")
+            print ()
+            print ("Pesquisar por:")
+            print ("[1] Título")
+            print ("[2] Autor")
+            print ("[3] Gênero")
+            print ("[4] Voltar")
+            pesquisa = input (">> ")
             print()
 
             if pesquisa == "1":
-                titulo = input ("Digite o nome.\n")
-                cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo LIKE '%{titulo}%' OR titulo LIKE '%{titulo}%'")
-                for i in cursor.fetchall():
-                    print(i [1])
-                break
+                while True:
+                    titulo = input ("Digite o título do livro: \n")
+                    cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo LIKE '%{titulo}%' OR titulo LIKE '%{titulo}%'")
+                    listaTitulo = []
+                    for titulo_for in cursor.fetchall ():
+                        listaTitulo = titulo_for
+
+                    if titulo in str (listaTitulo):
+                        cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo LIKE '%{titulo}%' OR titulo LIKE '%{titulo}%'")
+                        contador = 0
+                        for i in cursor.fetchall ():
+                            contador += 1
+                            print (f"{contador} - {i [1]}")
+                        break
+                    else:
+                        print ("Título não encontrado.")
+                        continue
+                continue
+
             elif pesquisa == "2":
-                autor = input ("Digite o autor.\n")
-                cursor.execute (f"SELECT * FROM livros_na_estante WHERE autor LIKE '%{autor}%' OR titulo LIKE '%{autor}%'")
-                for i in cursor.fetchall():
-                    print(i [1])
-                break
+                while True:
+                    autor = input ("Digite o nome do autor: \n")
+                    cursor.execute (f"SELECT * FROM livros_na_estante WHERE autor LIKE '%{autor}%' OR titulo LIKE '%{autor}%'")
+                    listaAutor = []
+                    for autor_for in cursor.fetchall ():
+                        listaAutor = autor_for
+
+                    if autor in str (listaAutor):
+                        cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo LIKE '%{autor}%' OR titulo LIKE '%{autor}%'")
+                        contador = 0
+                        for i in cursor.fetchall ():
+                            contador += 1
+                            print (f"{contador} - {i [2]}")
+                            print (i [1])
+                        break
+                    else:
+                        print ("Autor não encontrado.")
+                        continue
+                continue
+
             elif pesquisa == "3":
-                genero = input ("Digite o gênero.\n")
-                cursor.execute (f"SELECT * FROM livros_na_estante WHERE genero LIKE '%{genero}%' OR genero LIKE '%{genero}%'")
-                for i in cursor.fetchall():
-                    print(i [1])
+                while True:
+                    genero = input ("Digite o gênero que pertence o livro: \n")
+                    cursor.execute (f"SELECT * FROM livros_na_estante WHERE genero LIKE '%{genero}%' OR genero LIKE '%{genero}%'")
+                    listaGenero = []
+                    for genero_for in cursor.fetchall ():
+                        listaGenero = genero_for [4]
+
+                    if genero in str (listaGenero):
+                        cursor.execute (f"SELECT * FROM livros_na_estante WHERE titulo LIKE '%{genero}%' OR titulo LIKE '%{genero}%'")
+                        contador = 0
+                        for i in cursor.fetchall ():
+                            contador += 1
+                            print (f"{contador} - {i [4]}")
+                            print (i [1])
+                        break
+                    else:
+                        print ("Gênero não encontrado.")
+                        continue
+                continue
+
+            elif pesquisa == "4":
                 break
+
             else:
-                pass
+                print ("Opção incorreta!")
+            continue
 
 
     def emprestarLivro (self):
@@ -623,7 +729,6 @@ class Biblioteca:
                 print ()
                 if len (verificar) != 0:
                     cursor.execute (f"SELECT * FROM livros_emprestados WHERE matricula = '{matricula_verificarLivro}'")
-                    sleep (1)
                     print ("Livros emprestados para você:")
                     sleep (2)
                     for i in cursor.fetchall():

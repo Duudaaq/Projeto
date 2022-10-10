@@ -82,6 +82,7 @@ while True:
                         continue
 
                     case "3":
+                        bio = Biblioteca ()
                         bio.recuperarSenha ()
                         break
 
@@ -93,34 +94,49 @@ while True:
                         continue
 
         case "2":
-            print ()
-            print ("[1] Ver acervo")
-            print ("[2] Cadastrar novo livro")
-            print ("[3] Pesquisa")
-            print ("[4] Voltar")
-            livroOption = input (">> ")
+            while True:
+                print ()
+                print ("[1] Ver acervo")
+                print ("[2] Cadastrar novo livro")
+                print ("[3] Pesquisar")
+                print ("[4] Alterar livro")
+                print ("[5] Deletar livro")
+                print ("[6] Voltar")
+                livroOption = input (">> ")
 
-            match livroOption:
-                case "1":
-                    bio = Biblioteca ()
-                    bio.printarLivros ()
-                    continue
+                match livroOption:
+                    case "1":
+                        bio = Biblioteca ()
+                        bio.printarLivros ()
+                        continue
 
-                case "2":
-                    bio.inserirLivros ()
-                    bio.printarLivros ()
-                    continue
+                    case "2":
+                        bio = Biblioteca ()
+                        bio.inserirLivros ()
+                        bio.printarLivros ()
+                        continue
 
-                case "3":
-                    bio.printarPesquisar ()
-                    continue
-                    
-                case "4":
-                    continue
+                    case "3":
+                        bio = Biblioteca ()
+                        bio.printarPesquisar ()
+                        continue
 
-                case _:
-                    print ("Opção incorreta!")
-                    continue
+                    case "4":
+                        bio = Biblioteca ()
+                        bio.mudarLivro ()
+                        continue
+
+                    case "5":
+                        bio = Biblioteca ()
+                        bio.deleteLivro ()
+                        continue
+
+                    case "6":
+                        break
+
+                    case _:
+                        print ("Opção incorreta!")
+                        continue
 
         case "3":
             break
